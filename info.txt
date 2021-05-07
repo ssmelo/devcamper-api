@@ -1,0 +1,8 @@
+We can log our requests using morgan. That is a logger.
+- yarn add morgan
+
+Bibliotecas usadas:
+-colors: Usada para colocar cores em strings.
+-morgan: Usada para gerar logs das requests feitas.
+-slugify: Usada para gerar slugs de uma string em especifico.
+-node-geocoder: Gera localizações
