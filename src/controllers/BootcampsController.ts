@@ -29,7 +29,7 @@ class BootcampsController {
         queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
         // Finding resource
-        query = Bootcamp.find(JSON.parse(queryStr)); 
+        query = Bootcamp.find(JSON.parse(queryStr)).populate('courses');
         
         // Select Fields
         if(request.query.select) {
@@ -130,14 +130,17 @@ class BootcampsController {
         const { id } = request.params;
 
         // Get lat/lng from geocoder
-        const bootcamp = await Bootcamp.findByIdAndDelete(id);
+        const bootcamp = await Bootcamp.findById(id);
 
         if(!bootcamp) {
             return next(new ErrorResponse(`Bootcamp not found with id of ${request.params.id}`, 404));
         }
 
+        bootcamp.remove();
+
         return response.status(200).json({
-            success: true
+            success: true,
+            data: {}
         });
     }
     // @desc Get bootcamps within a radius

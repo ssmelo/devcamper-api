@@ -2,9 +2,15 @@ import { Router } from 'express'
 import { BootcampsController } from '../controllers/BootcampsController';
 import asyncHandler from '../middleware/async';
 
+// Include other resource routers
+import courseRouter from './courses';
+
 const router = Router();
 
 const bootcampsController = new BootcampsController();
+
+// Re-route into other resource routers
+router.use('/:bootcampId/courses', courseRouter);
 
 router.route('/radius/:zipcode/:distance').get(bootcampsController.getBootcampsInRadius);
 
